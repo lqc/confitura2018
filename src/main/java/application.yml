@@ -1,0 +1,8 @@
+spring:
+    mvc:
+    # Disable resolution of favicon.ico.
+        favicon:
+            enabled: false
+    resources:
+        # Disable default resource handling.
+        add-mappings: false
