@@ -1,7 +1,6 @@
-package com.github.lqc.worldcup;
+package com.github.lqc.worldcup.web;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.concurrent.atomic.AtomicLong;

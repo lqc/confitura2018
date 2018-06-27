@@ -1,4 +1,4 @@
-package com.github.lqc.worldcup;
+package com.github.lqc.worldcup.web;
 
 
 import org.springframework.http.MediaType;
@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-
 import reactor.core.publisher.Mono;
 
 @Component

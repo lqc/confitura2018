@@ -1,0 +1,36 @@
+[
+    {
+      "id": "A1.1",
+      "hostTeam": "RUS",
+      "guestTeam": "SAU",
+      "score": {
+        "hostTeamScore": 0,
+        "guestTeamScore": 0
+      }
+    },
+    {
+      "id": "A1.2",
+      "hostTeam": "EGY",
+      "guestTeam": "URY"
+    },
+    {
+      "id": "A2.1",
+      "hostTeam": "RUS",
+      "guestTeam": "EGY"
+    },
+    {
+      "id": "A2.2",
+      "hostTeam": "URY",
+      "guestTeam": "SAU"
+    },
+    {
+      "id": "A3.1",
+      "hostTeam": "URY",
+      "guestTeam": "RUS"
+    },
+    {
+      "id": "A3.2",
+      "hostTeam": "SAU",
+      "guestTeam": "EGY"
+    }
+]
