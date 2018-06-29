@@ -17,6 +17,12 @@ mvn clean package
 Running app
 -----------
 
+````
+java \
+	--add-opens java.base/java.util=com.fasterxml.jackson.databind \
+	-jar target/confitura-2018-0.0.1-SNAPSHOT.jar
+```
+
 It's a Spring Boot app, so just run the JAR.
 
 Available endpoints:
