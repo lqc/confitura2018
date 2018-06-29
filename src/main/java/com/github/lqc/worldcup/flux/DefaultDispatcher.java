@@ -45,7 +45,7 @@ public class DefaultDispatcher implements Dispatcher {
 		long s = System.nanoTime();
 		this.reducers.forEach(reducer -> reducer._2().accept(action));
 		long e = System.nanoTime();
-		// log.info("Reduction took {} ms", (e - s) / 1_000_000.0);
+		log.info("Reduction took {} ms", (e - s) / 1_000_000.0);
 	}
 
 	@Override
