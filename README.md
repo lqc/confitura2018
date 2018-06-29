@@ -17,7 +17,7 @@ mvn clean package
 Running app
 -----------
 
-````
+```
 java \
 	--add-opens java.base/java.util=com.fasterxml.jackson.databind \
 	-jar target/confitura-2018-0.0.1-SNAPSHOT.jar
