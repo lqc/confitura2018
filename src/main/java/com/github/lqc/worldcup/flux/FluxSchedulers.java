@@ -5,7 +5,7 @@ import reactor.core.scheduler.Schedulers;
 
 public class FluxSchedulers {
 
-	private static final Scheduler RENDERER = Schedulers.newSingle("Renderer");
+	private static final Scheduler RENDERER = Schedulers.newParallel("Renderer");
 
 	private static final Scheduler DISPATCHER = Schedulers.newSingle("Dispatcher");
 

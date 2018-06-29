@@ -1,6 +1,8 @@
 package com.github.lqc.worldcup.flux;
 
 
+import java.util.function.Consumer;
+
 import reactor.core.publisher.Mono;
 
 /**
@@ -14,18 +16,22 @@ public interface Dispatcher {
 	 */
 	void dispatch(Action action);
 
+	void dispatch(LazyDispatch action);
+
 	/**
-	 * Register given {@code reducer} with this dispatcher instance
+	 * Register given {@code reducer} with this dispatcher.
 	 *
-	 * @return handle that can be used to remove store
+	 * @return unique token
 	 */
-	Registration register(Reducer reducer);
+	String register(Consumer<Action> reducer);
 
-	interface Registration {
-		Mono<Void> unsubscribe();
-	}
+	/**
+	 * Remove registration from this dispatcher.
+	 */
+	void unregister(String token);
 
-	interface Reducer {
-		void reduce(Action action);
+	@FunctionalInterface
+	public interface LazyDispatch {
+		void dispatchAction(Consumer<Action> dispatcher);
 	}
 }

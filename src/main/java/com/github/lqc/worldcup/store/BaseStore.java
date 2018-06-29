@@ -42,7 +42,9 @@ public abstract class BaseStore<S> {
 	}
 
 	public Flux<S> stateChanges() {
-		return stateSubject.publishOn(FluxSchedulers.rendererThread());
+		return stateSubject
+				.publishOn(FluxSchedulers.rendererThread());
+				// .log("Publishing state change");
 	}
 
 	protected void handleAction(Action action) {

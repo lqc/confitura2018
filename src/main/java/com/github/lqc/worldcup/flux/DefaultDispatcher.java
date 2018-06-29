@@ -1,7 +1,9 @@
 package com.github.lqc.worldcup.flux;
 
-import com.oath.cyclops.types.persistent.PersistentList;
-import cyclops.data.Seq;
+import java.util.UUID;
+import java.util.function.Consumer;
+
+import cyclops.data.TrieMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -18,23 +20,32 @@ public class DefaultDispatcher implements Dispatcher {
 
 	private static final Logger log = LoggerFactory.getLogger(DefaultDispatcher.class);
 
-	private PersistentList<Reducer> reducers = Seq.empty();
+	private TrieMap<String, Consumer<Action>> reducers = TrieMap.empty();
 
-	private UnicastProcessor<Action> actions = UnicastProcessor.create();
+	private UnicastProcessor<Object> actions = UnicastProcessor.create();
 
 	private DefaultDispatcher() {
 		this.actions
 				.publishOn(FluxSchedulers.dispatcherThread())
-				.log()
-				.subscribeOn(FluxSchedulers.dispatcherThread())
-				.subscribe(this::processAction);
+				.subscribe(o -> {
+					if (o instanceof Action) {
+						processAction((Action) o);
+					} else if (o instanceof LazyDispatch) {
+						var ld = (LazyDispatch) o;
+						ld.dispatchAction(this::processAction);
+					}
+
+				});
 	}
 
 	/**
 	 * Apply action to all reducers.
 	 */
 	private void processAction(Action action) {
-		this.reducers.forEach(reducer -> reducer.reduce(action));
+		long s = System.nanoTime();
+		this.reducers.forEach(reducer -> reducer._2().accept(action));
+		long e = System.nanoTime();
+		// log.info("Reduction took {} ms", (e - s) / 1_000_000.0);
 	}
 
 	@Override
@@ -43,9 +54,20 @@ public class DefaultDispatcher implements Dispatcher {
 	}
 
 	@Override
-	public Registration register(Reducer reducer) {
-		log.info("Registering reducer: {}", reducer);
-		reducers = reducers.plus(reducer);
-		return null;
+	public void dispatch(LazyDispatch action) {
+		this.actions.onNext(action);
+	}
+
+	@Override
+	public String register(Consumer<Action> reducer) {
+		var id = UUID.randomUUID().toString();
+		log.info("Registering reducer: {} under id {}", reducer, id);
+		reducers = reducers.put(id, reducer);
+		return id;
+	}
+
+	@Override
+	public void unregister(String token) {
+		reducers = reducers.remove(token);
 	}
 }
