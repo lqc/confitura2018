@@ -1,8 +1,8 @@
 Server-side service with Flux/Redux
 ===================================
 
-This is a toy project exploring usefulness of
-the Flux/Redux in a server scenario.
+This is a toy project exploring usefulness of the Flux/Redux in a server scenario. There is no real error handling
+in many parts.
 
 Building
 --------
